@@ -1,9 +1,12 @@
-<html>
+<html lang="it">
     <head>
-        <title>Welcome</title>
+        <title>{{Titolo}}</title>
     </head>
     <body>
-        <img src="{{url_for('static', filename='images/imc.webp')}}" align="Center" />
-        <script type=text/javascript src="{{url_for('static', filename='js/scriptimc.js') }}"></script>
+        {% if part == 'part1' %}
+            <script type=text/javascript src="{{url_for('static', filename='js/scriptimc.js') }}"></script>
+        {% elif part == 'part2' %}
+            <script type=text/javascript src="{{url_for('static', filename='js/scriptimc_eng.js') }}"></script>
+        {% endif %}
     </body>
 </html>
