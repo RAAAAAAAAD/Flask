@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html >
-<head>
-    <title>Document</title>
-</head>
-<body>
-    {% for df in df %}
-    <p>{{lista_regioni}}</p>
-    {% endfor %}
-</body>
+<html>
+    <head>
+        <title>Regioni italiane</title>
+    </head>
+    <body>
+        {% for regione in lista %}
+            <a href = 'info/{{regione}}'>{{ regione }}</a><br />
+        {% endfor %}
+    </body>
 </html>
