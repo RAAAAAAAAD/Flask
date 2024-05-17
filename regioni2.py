@@ -2,16 +2,19 @@ from flask import Flask, render_template, request
 import pandas as pd
 app = Flask(__name__)
 
+dati_regioni = pd.read_csv('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-statistici-riferimento/popolazione-istat-regione-range.csv')
+
 @app.route('/')
 def home():
-    return render_template('search.html')
+    regione=dati_regioni['denominazione_regione'].drop_duplicates()
+    return render_template('search2.html', reg_nome=regione)
 
 @app.route('/search', methods = ['GET'])
 def search():
     import pandas as pd
     regione = request.args['regione']
-    dati_regioni = pd.read_csv('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-statistici-riferimento/popolazione-istat-regione-range.csv')
-    risultato = dati_regioni[dati_regioni['denominazione_regione']==regione.capitalize()].index
+    print(regione)
+    risultato = dati_regioni[dati_regioni['denominazione_regione']==regione].index
     if len(risultato) == 0:
         table = 'Regione non trovata'
     else:
@@ -21,7 +24,6 @@ def search():
 @app.route('/info', methods = ['GET'])
 def info():
     id = int(request.args['id'])
-    dati_regioni = pd.read_csv('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-statistici-riferimento/popolazione-istat-regione-range.csv')
     risultato = dati_regioni.iloc[[id]]
     if len(risultato) == 0:
         table = 'Regione non trovata'
