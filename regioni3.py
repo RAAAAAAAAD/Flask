@@ -23,14 +23,16 @@ def search():
 
 @app.route('/info', methods = ['GET'])
 def info():
-    id = int(request.args['id'])
-    risultato = dati_regioni.iloc[[id]]
-    if len(risultato) == 0:
-        table = 'Regione non trovata'
-    else:
-        for id in risultato:
-            table = risultato.to_html()
-    return render_template('table.html', tabella = table)
+    ids = request.args.getlist('id')
+    tables = []
+    for id in ids:
+        id = int(id)
+        risultato = dati_regioni.iloc[[id]]
+        if len(risultato) == 0:
+            tables.append(f'Regione con id {id} non trovata')
+        else:
+            tables.append(risultato.to_html())
+    return render_template('table2.html', tabella = tables )
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3245, debug=True)
